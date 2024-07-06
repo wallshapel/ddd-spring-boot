@@ -1,4 +1,4 @@
-package com.services.ms.student.app.utils;
+package com.services.ms.student.app.infrastructure.adapters.input.utils;
 
 import lombok.Getter;
 

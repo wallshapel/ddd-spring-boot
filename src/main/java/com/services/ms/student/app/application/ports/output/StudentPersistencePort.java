@@ -7,9 +7,9 @@ import java.util.Optional;
 
 public interface StudentPersistencePort {
 
-  Optional<Student> findById(Long id);
-  List<Student> findAll();
+  List<Student> index();
+  Optional<Student> show(Long id);
   Student save(Student student);
-  void deleteById(Long id);
+  void destroy(Long id);
 
 }

@@ -22,13 +22,13 @@ public class StudentServiceApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		List<StudentEntity> entities = Arrays.asList(
+		List<StudentEntity> students = Arrays.asList(
 				new StudentEntity(null, "Juan", "Mendoza", 28, "Calle 1"),
 				new StudentEntity(null, "Carlos", "Rodriguez", 30, "Calle 2"),
 				new StudentEntity(null, "Julio", "Perez", 10, "Calle 3"),
 				new StudentEntity(null, "Roman", "Ramirez", 40, "Calle 4")
 		);
-		repository.saveAll(entities);
+		repository.saveAll(students);
 	}
 
 }

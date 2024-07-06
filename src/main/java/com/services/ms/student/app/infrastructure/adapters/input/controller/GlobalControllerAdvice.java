@@ -1,7 +1,7 @@
-package com.services.ms.student.app.infrastructure.adapters.input.rest;
+package com.services.ms.student.app.infrastructure.adapters.input.controller;
 
-import com.services.ms.student.app.domain.exception.StudentNotFoundException;
 import com.services.ms.student.app.domain.model.ErrorResponse;
+import com.services.ms.student.app.infrastructure.adapters.input.exception.NotFoundException;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
@@ -14,15 +14,15 @@ import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.stream.Collectors;
 
-import static com.services.ms.student.app.utils.ErrorCatalog.GENERIC_ERROR;
-import static com.services.ms.student.app.utils.ErrorCatalog.INVALID_STUDENT;
-import static com.services.ms.student.app.utils.ErrorCatalog.STUDENT_NOT_FOUND;
+import static com.services.ms.student.app.infrastructure.adapters.input.utils.ErrorCatalog.GENERIC_ERROR;
+import static com.services.ms.student.app.infrastructure.adapters.input.utils.ErrorCatalog.INVALID_STUDENT;
+import static com.services.ms.student.app.infrastructure.adapters.input.utils.ErrorCatalog.STUDENT_NOT_FOUND;
 
 @RestControllerAdvice
 public class GlobalControllerAdvice {
 
   @ResponseStatus(HttpStatus.NOT_FOUND)
-  @ExceptionHandler(StudentNotFoundException.class)
+  @ExceptionHandler(NotFoundException.class)
   public ErrorResponse handleStudentNotFoundException() {
     return ErrorResponse.builder()
         .code(STUDENT_NOT_FOUND.getCode())

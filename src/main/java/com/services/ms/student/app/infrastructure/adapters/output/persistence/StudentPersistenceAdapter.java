@@ -14,28 +14,26 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class StudentPersistenceAdapter implements StudentPersistencePort {
 
-  private final StudentRepository repository;
-  private final StudentPersistenceMapper mapper;
+  private final StudentRepository studentRepository;
+  private final StudentPersistenceMapper studentPersistenceMapper;
 
   @Override
-  public Optional<Student> findById(Long id) {
-    return repository.findById(id)
-        .map(mapper::toStudent);
+  public List<Student> index() {
+    return studentPersistenceMapper.toStudentList(studentRepository.findAll());
   }
 
   @Override
-  public List<Student> findAll() {
-    return mapper.toStudentList(repository.findAll());
+  public Optional<Student> show(Long id) {
+    return studentRepository.findById(id).map(studentPersistenceMapper::toStudent);
   }
 
   @Override
   public Student save(Student student) {
-    return mapper.toStudent(
-        repository.save(mapper.toStudentEntity(student)));
+    return studentPersistenceMapper.toStudent(studentRepository.save(studentPersistenceMapper.toStudentEntity(student)));
   }
 
   @Override
-  public void deleteById(Long id) {
-    repository.deleteById(id);
+  public void destroy(Long id) {
+    studentRepository.deleteById(id);
   }
 }

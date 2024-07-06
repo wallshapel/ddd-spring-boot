@@ -1,16 +1,16 @@
 package com.services.ms.student.app.domain.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.Setter;
+import lombok.Builder;
 
-@Builder
-@Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
+@Builder
 public class Student {
 
   private Long id;
@@ -20,3 +20,4 @@ public class Student {
   private String address;
 
 }
+

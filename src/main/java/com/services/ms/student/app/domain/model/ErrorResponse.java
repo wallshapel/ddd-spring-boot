@@ -1,15 +1,15 @@
 package com.services.ms.student.app.domain.model;
 
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.Builder;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Builder
 @Getter
 @Setter
+@Builder
 public class ErrorResponse {
 
   private String code;
@@ -18,3 +18,4 @@ public class ErrorResponse {
   private LocalDateTime timestamp;
 
 }
+

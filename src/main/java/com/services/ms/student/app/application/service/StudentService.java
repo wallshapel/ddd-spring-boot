@@ -2,10 +2,11 @@ package com.services.ms.student.app.application.service;
 
 import com.services.ms.student.app.application.ports.input.StudentServicePort;
 import com.services.ms.student.app.application.ports.output.StudentPersistencePort;
-import com.services.ms.student.app.domain.exception.StudentNotFoundException;
+import com.services.ms.student.app.infrastructure.adapters.input.exception.NotFoundException;
 import com.services.ms.student.app.domain.model.Student;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -13,43 +14,45 @@ import java.util.List;
 @RequiredArgsConstructor
 public class StudentService implements StudentServicePort {
 
-  private final StudentPersistencePort persistencePort;
+    private final StudentPersistencePort studentPersistencePort;
 
-  @Override
-  public Student findById(Long id) {
-    return persistencePort.findById(id)
-        .orElseThrow(StudentNotFoundException::new);
-  }
+    @Override
+    @Transactional(readOnly = true)
+    public List<Student> index() {
+    return studentPersistencePort.index();
+    }
 
-  @Override
-  public List<Student> findAll() {
-    return persistencePort.findAll();
-  }
+    @Override
+    @Transactional(readOnly = true)
+    public Student show(Long id) {
+        return studentPersistencePort.show(id).orElseThrow(NotFoundException::new);
+    }
 
-  @Override
-  public Student save(Student student) {
-    return persistencePort.save(student);
-  }
+    @Override
+    @Transactional
+    public Student store(Student student) {
+    return studentPersistencePort.save(student);
+    }
 
-  @Override
-  public Student update(Long id, Student student) {
-    return persistencePort.findById(id)
+    @Override
+    @Transactional
+    public Student update(Long id, Student student) {
+    return studentPersistencePort.show(id)
         .map(savedStudent -> {
           savedStudent.setFirstname(student.getFirstname());
           savedStudent.setLastname(student.getLastname());
           savedStudent.setAge(student.getAge());
           savedStudent.setAddress(student.getAddress());
-          return persistencePort.save(savedStudent);
+          return studentPersistencePort.save(savedStudent);
         })
-        .orElseThrow(StudentNotFoundException::new);
-  }
-
-  @Override
-  public void deleteById(Long id) {
-    if (persistencePort.findById(id).isEmpty()) {
-      throw new StudentNotFoundException();
+        .orElseThrow(NotFoundException::new);
     }
 
-    persistencePort.deleteById(id);
-  }
+    @Override
+    @Transactional
+    public void destroy(Long id) {
+        this.show(id);
+        studentPersistencePort.destroy(id);
+    }
+
 }

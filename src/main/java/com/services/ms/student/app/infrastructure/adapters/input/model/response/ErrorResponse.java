@@ -1,4 +1,4 @@
-package com.services.ms.student.app.infrastructure.adapters.input.rest.model.response;
+package com.services.ms.student.app.infrastructure.adapters.input.model.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
